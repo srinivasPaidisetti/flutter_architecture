@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutterbasictemplate/styles/colors.dart';
+
+import 'constant/constants.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -9,9 +12,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: APP_NAME,
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        scaffoldBackgroundColor: scaffoldBackGroundColor,
+        primaryColor: primary,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
