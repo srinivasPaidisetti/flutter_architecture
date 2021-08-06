@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 
-T catchError<T>(ValueGetter<T> run,
-    {T defaultValue, String tag, ValueSetter<Error> catchBlock}) {
+T? catchError<T>(ValueGetter<T> run,
+    {T? defaultValue, String? tag, ValueSetter<Error>? catchBlock}) {
   try {
     var output;
     Future.sync(() {
@@ -18,7 +18,7 @@ T catchError<T>(ValueGetter<T> run,
   } catch (error) {
     if (catchBlock != null) {
       print('handled -> ${'$tag :' ?? ''}$error');
-      catchBlock(error);
+      catchBlock(error as Error);
     } else {
       print('${tag ?? 'catchError'} : $error');
     }

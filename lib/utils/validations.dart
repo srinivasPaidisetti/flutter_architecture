@@ -1,4 +1,4 @@
-String validateEmailAddress(String value) {
+String? validateEmailAddress(String value) {
   if (value.isEmpty && value.length == 0) {
     return "Email can't be empty";
   } else if (!RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
@@ -9,7 +9,7 @@ String validateEmailAddress(String value) {
   }
 }
 
-String validatePassword(String value) {
+String? validatePassword(String value) {
   if (value.length == 0) {
     return "Password can't be empty";
   } else if (value.length < 6) {
@@ -19,7 +19,7 @@ String validatePassword(String value) {
   }
 }
 
-String validateName(String value) {
+String? validateName(String value) {
   if (value.isEmpty && value.length == 0) {
     return "Name can't be empty";
   } else {
@@ -27,7 +27,7 @@ String validateName(String value) {
   }
 }
 
-String validatePhoneNumber(String value) {
+String? validatePhoneNumber(String value) {
   if (value.isEmpty && value.length == 0) {
     return "Phone number can't be empty";
   } else if (value.length < 9) {

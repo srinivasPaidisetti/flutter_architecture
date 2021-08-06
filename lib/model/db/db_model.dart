@@ -4,7 +4,7 @@ mixin DbModel<T> {
     return Map<String, dynamic>();
   }
 
-  T fromJson(Map<String, dynamic> json) {
+  T? fromJson(Map<String, dynamic> json) {
     print('fromJson not implemented');
     return null;
   }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dio/dio.dart';
 import 'package:flutterbasictemplate/constant/constants.dart';
 import 'package:flutterbasictemplate/model/db/db_model.dart';
@@ -8,9 +10,9 @@ import 'package:sqflite/sqflite.dart';
 import 'package:sqflite/sqlite_api.dart';
 
 mixin DatabaseHelper {
-  Database _db;
+  Database? _db;
 
-  Future<Database> initDb() async {
+  Future<Database?> initDb() async {
     return catchError(() async {
       var documentsDirectory = await getApplicationDocumentsDirectory();
       String path = join(documentsDirectory.path, "$APP_NAME.db");
@@ -23,12 +25,12 @@ mixin DatabaseHelper {
         });
       });
       return theDb;
-    });
+    } as Database Function());
   }
 
   final _lock = new Lock();
 
-  Future<Database> getDb() async {
+  Future<Database?> getDb() async {
     return catchError(() async {
       if (_db == null) {
         await _lock.enqueue(() async {
@@ -38,20 +40,20 @@ mixin DatabaseHelper {
         });
       }
       return _db;
-    });
+    } as Database Function());
   }
 
   Future<void> insertDoc(String tableName, Map<dynamic, dynamic> doc) async {
     return catchError(() async {
-      final Database db = await getDb();
-      await db.insert(tableName, doc,
+      final Database db = await (getDb() as FutureOr<Database>);
+      await db.insert(tableName, doc as Map<String, Object?>,
           conflictAlgorithm: ConflictAlgorithm.replace);
     });
   }
 
-  Future insertDocs(List<DbModel> docs) {
+  Future? insertDocs(List<DbModel> docs) {
     return catchError(() async {
-      final Database db = await getDb();
+      final Database db = await (getDb() as FutureOr<Database>);
       final batch = db.batch();
       docs.forEach((doc) {
         batch.insert(doc.kTableName, doc.toJson(),
@@ -61,67 +63,67 @@ mixin DatabaseHelper {
     });
   }
 
-  Future<T> getDoc<T extends DbModel>(T table, dynamic id) async {
+  Future<T?> getDoc<T extends DbModel>(T table, dynamic id) async {
     return await _getDoc(table, id: id);
   }
 
-  Future<T> getFirstDoc<T extends DbModel>(T table) async {
+  Future<T?> getFirstDoc<T extends DbModel>(T table) async {
     return await _getDoc(table);
   }
 
-  Future<T> _getDoc<T extends DbModel>(T table, {dynamic id}) async {
+  Future<T?> _getDoc<T extends DbModel>(T table, {dynamic id}) async {
     return catchError(() async {
-      final Database db = await getDb();
-      T doc;
+      final Database? db = await getDb();
+      T? doc;
       if (id != null) {
         final List<Map<String, dynamic>> maps =
-            await db.query(table.kTableName, where: 'id = ?', whereArgs: [id]);
+            await db!.query(table.kTableName, where: 'id = ?', whereArgs: [id]);
         if (maps.isNotEmpty) {
-          doc = await table.fromJson(maps?.first);
+          doc = await table.fromJson(maps.first);
         } else {
           doc = table;
         }
         return doc;
       } else {
         final List<Map<String, dynamic>> maps =
-            await db.query(table.kTableName);
+            await db!.query(table.kTableName);
         if (maps.isNotEmpty) {
-          doc = await table.fromJson(maps?.first);
+          doc = await table.fromJson(maps.first);
         } else {
           doc = table;
         }
         return doc;
       }
-    });
+    } as T Function());
   }
 
-  Future<List<T>> getDocs<T extends DbModel>(T table,
-      {String where, List whereArgs}) async {
+  Future<List<T>?> getDocs<T extends DbModel>(T table,
+      {String? where, List? whereArgs}) async {
     return await _getDocs(table, where: where, whereArgs: whereArgs);
   }
 
-  Future<List<T>> _getDocs<T extends DbModel>(T table,
-      {String where, List whereArgs}) async {
+  Future<List<T>?> _getDocs<T extends DbModel>(T table,
+      {String? where, List? whereArgs}) async {
     return catchError(() async {
-      final db = await getDb();
+      final db = await (getDb() as FutureOr<Database>);
       final List<Map<String, dynamic>> docs =
           await db.query(table.kTableName, where: where, whereArgs: whereArgs);
       final mappedDocs =
           docs?.map((doc) => table.fromJson(doc))?.toList()?.cast<T>();
       return mappedDocs ?? <T>[];
-    });
+    } as List<T> Function());
   }
 
   Future deleteDoc(String tableName, int id) async {
     return catchError(() async {
-      final Database db = await getDb();
+      final Database db = await (getDb() as FutureOr<Database>);
       await db.delete(tableName, where: 'id = ?', whereArgs: [id]);
     });
   }
 
   Future deleteDocs(String tableName) async {
     return catchError(() async {
-      final Database db = await getDb();
+      final Database db = await (getDb() as FutureOr<Database>);
       await db.delete(tableName);
     });
   }

@@ -10,11 +10,11 @@ _NetworkManager networkManager = _NetworkManager._();
 class _NetworkManager with NetworkHelper {
   _NetworkManager._();
 
-  Future<ApplicationSetting> fetchApplicationData(
-      {ValueSetter<DioError> errorResponse}) async {
+  Future<ApplicationSetting?> fetchApplicationData(
+      {ValueSetter<DioError>? errorResponse}) async {
     final doc = await get(ApplicationSetting(), NetworkApi.APPLICATION_DATA,
         errorListener: (error) {
-      errorResponse(error);
+      errorResponse!(error);
     });
     return doc;
   }

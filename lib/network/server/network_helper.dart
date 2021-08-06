@@ -7,10 +7,10 @@ import 'package:flutterbasictemplate/constant/api_constant.dart';
 import 'package:flutterbasictemplate/model/base_server_response.dart';
 
 mixin NetworkHelper {
-  Dio _dio;
+  Dio? _dio;
 
   Future<Dio> getDio() async {
-    final user = await null;
+    final dynamic user = await null;
     final dio = Dio();
     final baseOptions = BaseOptions();
     Map<String, String> headers = Map<String, String>();
@@ -25,20 +25,20 @@ mixin NetworkHelper {
     return dio;
   }
 
-  Future<T> post<T extends BaseServerResponse>(
+  Future<T?> post<T extends BaseServerResponse>(
       T responseModel, String url, Map<String, dynamic> body,
-      {ValueSetter<DioError> errorListener}) async {
+      {ValueSetter<DioError>? errorListener}) async {
     try {
       final dio = await getDio();
       final Response<String> response = await dio.post(url, data: body);
       return responseModel.fromString(response?.data);
     } on DioError catch (e) {
-      errorListener(e);
+      errorListener!(e);
     }
     return null;
   }
 
-  Future<List<T>> postWithArrayResponse<T extends BaseServerResponse>(
+  Future<List<T>?> postWithArrayResponse<T extends BaseServerResponse>(
       T responseModel, String url, Map<String, dynamic> body) async {
     try {
       final dio = await getDio();
@@ -49,7 +49,7 @@ mixin NetworkHelper {
     }
   }
 
-  Future<List<T>> getWithArrayResponse<T extends BaseServerResponse>(
+  Future<List<T>?> getWithArrayResponse<T extends BaseServerResponse>(
       T responseModel, String path, Map<String, String> params) async {
     try {
       final dio = await getDio();
@@ -59,22 +59,22 @@ mixin NetworkHelper {
     return null;
   }
 
-  Future<T> get<T extends BaseServerResponse>(T responseModel, String path,
-      {Map<String, dynamic> params,
-      ValueSetter<DioError> errorListener}) async {
+  Future<T?> get<T extends BaseServerResponse>(T responseModel, String path,
+      {Map<String, dynamic>? params,
+      ValueSetter<DioError>? errorListener}) async {
     try {
       final dio = await getDio();
       final response = await dio.get(path, queryParameters: params);
       return responseModel.fromJson(response?.data);
     } on DioError catch (e) {
-      errorListener(e);
+      errorListener!(e);
     }
     return null;
   }
 
-  Future<List<T>> getWithArrayJsonResponse<T extends BaseServerResponse>(
+  Future<List<T>?> getWithArrayJsonResponse<T extends BaseServerResponse>(
       T responseModel, String path, Map<String, dynamic> params,
-      {ValueSetter<DioError> errorListener}) async {
+      {ValueSetter<DioError>? errorListener}) async {
     try {
       final dio = await getDio();
       final response = await dio.get(path, queryParameters: params);
@@ -91,7 +91,7 @@ mixin NetworkHelper {
     return null;
   }
 
-  Future<T> delete<T extends BaseServerResponse>(
+  Future<T?> delete<T extends BaseServerResponse>(
       T responseModel, String url, Map<String, dynamic> body) async {
     try {
       final dio = await getDio();

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class UtilService {
   static Future showDialogBox(
       BuildContext context, String title, String message,
-      {List<Widget> actions}) {
+      {List<Widget>? actions}) {
     return showDialog<Null>(
       context: context,
       barrierDismissible: false,
@@ -34,7 +34,7 @@ class UtilService {
     );
   }
 
-  static void showSnackBar(scaffoldKey, message, {Duration duration}) {
+  static void showSnackBar(scaffoldKey, message, {Duration? duration}) {
     final snackBar = SnackBar(
       content: Text(message),
       duration: duration ?? Duration(milliseconds: 3000),

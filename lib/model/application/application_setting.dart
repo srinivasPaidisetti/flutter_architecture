@@ -9,14 +9,14 @@ class ApplicationSetting extends BaseServerResponse {
     this.responseCodeText,
   });
 
-  Data data;
-  int responseCode;
-  String responseMessage;
-  String responseCodeText;
+  Data? data;
+  int? responseCode;
+  String? responseMessage;
+  String? responseCodeText;
 
-  factory ApplicationSetting.fromJson(Map<String, dynamic> json) =>
+  factory ApplicationSetting.fromJson(Map<String, dynamic>? json) =>
       ApplicationSetting(
-        data: json["Data"] == null ? null : Data.fromJson(json["Data"]),
+        data: json!["Data"] == null ? null : Data.fromJson(json["Data"]),
         responseCode:
             json["ResponseCode"] == null ? null : json["ResponseCode"],
         responseMessage:
@@ -26,15 +26,15 @@ class ApplicationSetting extends BaseServerResponse {
       );
 
   Map<String, dynamic> toJson() => {
-        "Data": data == null ? null : data.toJson(),
+        "Data": data == null ? null : data!.toJson(),
         "ResponseCode": responseCode == null ? null : responseCode,
         "ResponseMessage": responseMessage == null ? null : responseMessage,
         "ResponseCodeText": responseCodeText == null ? null : responseCodeText,
       };
 
   @override
-  fromJson(Map json) {
-    return ApplicationSetting.fromJson(json);
+  fromJson(Map? json) {
+    return ApplicationSetting.fromJson(json as Map<String, dynamic>?);
   }
 }
 
@@ -50,14 +50,14 @@ class Data {
     this.supportedLanguages,
   });
 
-  int androidAppMinVersion;
-  int androidAppLatestVersion;
-  String iOsAppLatestVersion;
-  String iOsAppMinVersion;
-  DateTime serverDeployedOn;
-  String serverVersion;
-  DateTime settingModifiedOn;
-  List<dynamic> supportedLanguages;
+  int? androidAppMinVersion;
+  int? androidAppLatestVersion;
+  String? iOsAppLatestVersion;
+  String? iOsAppMinVersion;
+  DateTime? serverDeployedOn;
+  String? serverVersion;
+  DateTime? settingModifiedOn;
+  List<dynamic>? supportedLanguages;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         androidAppMinVersion: json["AndroidAppMinVersion"] == null
@@ -94,13 +94,13 @@ class Data {
         "iOSAppMinVersion": iOsAppMinVersion == null ? null : iOsAppMinVersion,
         "ServerDeployedOn": serverDeployedOn == null
             ? null
-            : serverDeployedOn.toIso8601String(),
+            : serverDeployedOn!.toIso8601String(),
         "ServerVersion": serverVersion == null ? null : serverVersion,
         "SettingModifiedOn": settingModifiedOn == null
             ? null
-            : settingModifiedOn.toIso8601String(),
+            : settingModifiedOn!.toIso8601String(),
         "SupportedLanguages": supportedLanguages == null
             ? null
-            : List<dynamic>.from(supportedLanguages.map((x) => x)),
+            : List<dynamic>.from(supportedLanguages!.map((x) => x)),
       };
 }

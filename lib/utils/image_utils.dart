@@ -4,13 +4,13 @@ enum IMAGE { ICON, BG_IMAGE, LOGO }
 
 class ImageUtils {
   static Widget getImage({
-    @required IMAGE imageType,
-    @required dynamic imageName,
-    Size size,
-    Color color,
-    BoxFit fit,
-    double height,
-    double width,
+    required IMAGE imageType,
+    required dynamic imageName,
+    Size? size,
+    Color? color,
+    BoxFit? fit,
+    double? height,
+    double? width,
   }) {
     return Image.asset(
       _getImagePath(imageType, imageName),
@@ -21,7 +21,7 @@ class ImageUtils {
     );
   }
 
-  static Icon getMaterialIcon(IconData iconData, {Color color, double size}) {
+  static Icon getMaterialIcon(IconData iconData, {Color? color, double? size}) {
     return Icon(
       iconData,
       color: color,
