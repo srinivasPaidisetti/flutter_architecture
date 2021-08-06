@@ -8,7 +8,7 @@ T? catchError<T>(ValueGetter<T> run,
       output = run();
     }).catchError((error) {
       if (catchBlock != null) {
-        print('handled -> ${'$tag :' ?? ''}$error');
+        print('handled -> ${'$tag :'}$error');
         catchBlock(error);
       } else {
         print('${tag ?? 'catchError'} : $error');
@@ -17,7 +17,7 @@ T? catchError<T>(ValueGetter<T> run,
     return output;
   } catch (error) {
     if (catchBlock != null) {
-      print('handled -> ${'$tag :' ?? ''}$error');
+      print('handled -> ${'$tag :'}$error');
       catchBlock(error as Error);
     } else {
       print('${tag ?? 'catchError'} : $error');

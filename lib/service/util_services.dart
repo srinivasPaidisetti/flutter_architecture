@@ -21,7 +21,7 @@ class UtilService {
             ),
             actions: actions ??
                 <Widget>[
-                  new FlatButton(
+                  new TextButton(
                     child: new Text('OK'),
                     onPressed: () {
                       Navigator.pop(context);
@@ -52,7 +52,6 @@ class UtilService {
       MaterialPageRoute(builder: (context) => screen),
     );
   }
-
 
   static Future navigateToAndPopAll(BuildContext context, Widget screen) {
     return Navigator.pushAndRemoveUntil(

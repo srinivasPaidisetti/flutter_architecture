@@ -18,7 +18,8 @@ class BaseWidget<T extends ChangeNotifier?> extends StatefulWidget {
   _BaseWidgetState<T> createState() => _BaseWidgetState<T>();
 }
 
-class _BaseWidgetState<T extends ChangeNotifier?> extends State<BaseWidget<T?>> {
+class _BaseWidgetState<T extends ChangeNotifier?>
+    extends State<BaseWidget<T?>> {
   T? model;
 
   @override

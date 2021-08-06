@@ -109,8 +109,8 @@ mixin DatabaseHelper {
       final List<Map<String, dynamic>> docs =
           await db.query(table.kTableName, where: where, whereArgs: whereArgs);
       final mappedDocs =
-          docs?.map((doc) => table.fromJson(doc))?.toList()?.cast<T>();
-      return mappedDocs ?? <T>[];
+          docs.map((doc) => table.fromJson(doc)).toList().cast<T>();
+      return mappedDocs;
     } as List<T> Function());
   }
 

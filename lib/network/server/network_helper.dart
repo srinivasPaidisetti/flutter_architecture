@@ -7,8 +7,6 @@ import 'package:flutterbasictemplate/constant/api_constant.dart';
 import 'package:flutterbasictemplate/model/base_server_response.dart';
 
 mixin NetworkHelper {
-  Dio? _dio;
-
   Future<Dio> getDio() async {
     final dynamic user = await null;
     final dio = Dio();
@@ -21,7 +19,6 @@ mixin NetworkHelper {
     baseOptions.baseUrl = NetworkApi.API_ENDPOINT;
     dio.options = baseOptions;
     dio.interceptors.add(LogInterceptor(responseBody: true));
-    _dio = dio;
     return dio;
   }
 
@@ -31,7 +28,7 @@ mixin NetworkHelper {
     try {
       final dio = await getDio();
       final Response<String> response = await dio.post(url, data: body);
-      return responseModel.fromString(response?.data);
+      return responseModel.fromString(response.data);
     } on DioError catch (e) {
       errorListener!(e);
     }
@@ -44,7 +41,7 @@ mixin NetworkHelper {
       final dio = await getDio();
       final response = await dio.post(url, data: body);
       return response.data?.map((x) => responseModel.fromJson(x));
-    } on DioError catch (e) {
+    } on DioError {
       return null;
     }
   }
@@ -65,7 +62,7 @@ mixin NetworkHelper {
     try {
       final dio = await getDio();
       final response = await dio.get(path, queryParameters: params);
-      return responseModel.fromJson(response?.data);
+      return responseModel.fromJson(response.data);
     } on DioError catch (e) {
       errorListener!(e);
     }
@@ -96,8 +93,8 @@ mixin NetworkHelper {
     try {
       final dio = await getDio();
       final response = await dio.delete(url, queryParameters: body);
-      return responseModel.fromJson(response?.data);
-    } on DioError catch (e) {}
+      return responseModel.fromJson(response.data);
+    } on DioError {}
     return null;
   }
 }
